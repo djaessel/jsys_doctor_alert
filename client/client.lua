@@ -15,10 +15,11 @@ function checkPlayerPos()
                 if #(coordsx - playerPos) <= Config.Range then
                     if keyPressed(Config.KeyBinding) then
                         TriggerServerEvent("jsys_doctor_alert:show_info")
+                        Citizen.Wait(Config.Cooldown * 1000) -- cooldown 10s
                     end
                 end
             end
-            Citizen.Wait(100)
+            Citizen.Wait(Config.TickerCheck)
         end
     end)
 end
@@ -27,7 +28,7 @@ end
 RegisterNetEvent("jsys_doctor_alert:show_info_client")
 AddEventHandler("jsys_doctor_alert:show_info_client", function()
     print("JSYS: Hello Doctor!")
-    TriggerEvent('vorp:TipRight', "Someone needs a doctor in the building!", 10000)
+    TriggerEvent('vorp:TipRight', "Someone needs a doctor in the building!", Config.VisibleDuration)
 end)
 
 
