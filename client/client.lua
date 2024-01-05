@@ -11,7 +11,7 @@ function checkPlayerPos()
         local ped = PlayerPedId()
         while active do
             local playerPos = GetEntityCoords(ped)
-            for coordx in pairs(Config.CoordinatesAll) do
+            for _, coordx in pairs(Config.CoordinatesAll) do
                 if #(coordsx.cord - playerPos) <= Config.Range then
                     TriggerEvent('vorp:TipRight', "[E] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                     if keyPressed(Config.KeyBinding) then
