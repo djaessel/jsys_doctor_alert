@@ -11,11 +11,16 @@ function checkPlayerPos()
         local ped = PlayerPedId()
         while active do
             local playerPos = GetEntityCoords(ped)
-            for coordx in Config.CoordinatesAll do
-                if #(coordsx - playerPos) <= Config.Range then
+            for coordx in pairs(Config.CoordinatesAll) do
+                if #(coordsx.cord - playerPos) <= Config.Range then
+                    TriggerEvent('vorp:TipRight', "[E] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                     if keyPressed(Config.KeyBinding) then
-                        TriggerServerEvent("jsys_doctor_alert:show_info")
+                        --TriggerServerEvent("jsys_doctor_alert:show_info")
+                        print("JSYS: execute command", coordsx.coomand)
+                        ExecuteCommand(coordsx.command)
+                        print("JSYS: Waiting...", Config.Cooldown * 1000, "seconds")
                         Citizen.Wait(Config.Cooldown * 1000) -- cooldown 10s
+                        print("JSYS: Done waiting!")
                     end
                 end
             end
@@ -25,11 +30,11 @@ function checkPlayerPos()
 end
 
 
-RegisterNetEvent("jsys_doctor_alert:show_info_client")
-AddEventHandler("jsys_doctor_alert:show_info_client", function()
-    print("JSYS: Hello Doctor!")
-    TriggerEvent('vorp:TipRight', "Someone needs a doctor in the building!", Config.VisibleDuration)
-end)
+--RegisterNetEvent("jsys_doctor_alert:show_info_client")
+--AddEventHandler("jsys_doctor_alert:show_info_client", function()
+--    print("JSYS: Hello Doctor!")
+--    TriggerEvent('vorp:TipRight', "Someone needs a doctor in the building!", Config.VisibleDuration)
+--end)
 
 
 checkPlayerPos()
