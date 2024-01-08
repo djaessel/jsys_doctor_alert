@@ -15,7 +15,7 @@ function checkPlayerPos()
             for _, coordsx in pairs(Config.CoordinatesAll) do
                 local rangePos = #(coordsx.coords - playerPos)
                 if rangePos <= Config.Range then
-                    if math.floor(infoCountX / 1000) >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
+                    if infoCountx >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
                         TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                         infoCountX = 0
                     end
@@ -24,9 +24,8 @@ function checkPlayerPos()
                         print("JSYS: execute command", coordsx.coomand)
                         ExecuteCommand(coordsx.command)
 
-                        local cooldown = Config.Cooldown * 1000 -- convert to seconds
-                        print("JSYS: Waiting...", cooldown, "seconds")
-                        Citizen.Wait(cooldown)
+                        print("JSYS: Waiting...", Config.Cooldown, "seconds")
+                        Citizen.Wait(Config.Cooldown)
                         print("JSYS: Done waiting!")
                         active = false
                     end

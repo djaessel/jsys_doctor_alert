@@ -1,13 +1,11 @@
 -- JSYS was here! :P
 
 Config = {
-    --KeyBinding = 0xD51B784F, -- key hash - E / INPUT_CONTEXT_Y
-    --KeyBinding = 0xCEFD9220, -- key hash - E
-    KeyBinding = 0xE30CD707,
+    KeyBinding = 0xE30CD707, -- R
     Range = 3, -- meters
-    Cooldown = 40, -- seconds
+    Cooldown = 40000, -- milliseconds
     TickerCheck = 2500, -- milliseconds
-    KeyInfoVisibleDuration = 5, -- seconds
+    KeyInfoVisibleDuration = 5000, -- milliseconds
 
     CoordinatesAll = {
         {
