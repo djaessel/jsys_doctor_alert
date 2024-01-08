@@ -8,14 +8,15 @@ local active = false
 function checkPlayerPos()
     active = true
     Citizen.CreateThread(function ()
-        local ped = PlayerPedId()
         local infoCountX = -1
         while active do
-            local playerPos = GetEntityCoords(ped)
+            local playerPed = PlayerPedId()
+            local playerPos = GetEntityCoords(playerPed, true, true)
             for _, coordsx in pairs(Config.CoordinatesAll) do
-                if #(coordsx.coords - playerPos) <= Config.Range then
+                local rangePos = #(coordsx.coords - playerPos)
+                if rangePos <= Config.Range then
                     if math.floor(infoCountX / 1000) >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
-                        TriggerEvent('vorp:TipRight', "[E] (INPUT_CONTEXT_Y) um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
+                        TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                         infoCountX = 0
                     end
                     if keyPressed(Config.KeyBinding) then
@@ -27,6 +28,7 @@ function checkPlayerPos()
                         print("JSYS: Waiting...", cooldown, "seconds")
                         Citizen.Wait(cooldown)
                         print("JSYS: Done waiting!")
+                        active = false
                     end
                 end
             end
