@@ -12,7 +12,7 @@ function checkPlayerPos()
         local infoCountX = -1
         while active do
             local playerPos = GetEntityCoords(ped)
-            for _, coordx in pairs(Config.CoordinatesAll) do
+            for _, coordsx in pairs(Config.CoordinatesAll) do
                 if #(coordsx.coords - playerPos) <= Config.Range then
                     if math.floor(infoCountX / 1000) >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
                         TriggerEvent('vorp:TipRight', "[E] (INPUT_CONTEXT_Y) um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
