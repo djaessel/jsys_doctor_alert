@@ -1,7 +1,7 @@
 -- JSYS was here! :P
 
 function keyPressed(key)
-    IsControlJustPressed(0, key)
+    IsControlPressed(0, key) -- changed 09.01.24
 end
 
 local active = false
