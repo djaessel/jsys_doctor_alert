@@ -17,7 +17,7 @@ function createAndRunPrompt()
         PromptSetControlAction(prompt, GetHashKey("INPUT_CONTEXT_X")) -- R key
         PromptSetText(prompt, CreateVarString(10, "LITERAL_STRING", "[R] um nach dem Arzt schicken zu lassen"))
 
-        local position = Config.CoordinatesAll[0].coords
+        local position = Config.CoordinatesAll[1].coords
         local radius = Config.Radius
         -- _UI_PROMPT_CONTEXT_SET_POINT
         Citizen.InvokeNative(0xAE84C5EE2C384FB3, prompt, position.x, position.y, position.z)
@@ -34,8 +34,8 @@ function createAndRunPrompt()
             if PromptIsActive(prompt) then
                 if PromptIsPressed(prompt) then
                     print("JSYS: You pressed R!!!")
-                    print("JSYS: execute command", Config.CoordinatesAll[0].coomand)
-                    ExecuteCommand(Config.CoordinatesAll[0].command)
+                    print("JSYS: execute command", Config.CoordinatesAll[1].coomand)
+                    ExecuteCommand(Config.CoordinatesAll[1].command)
                     print("JSYS: Waiting...", Config.Cooldown, "seconds")
                     Citizen.Wait(Config.Cooldown)
                     print("JSYS: Done waiting!")
