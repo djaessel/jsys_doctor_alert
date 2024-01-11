@@ -17,12 +17,12 @@ client_scripts {
   'client/*.lua',
 }
 
-server_scripts {
-  'server/*.lua',
-}
+--server_scripts {
+--  'server/*.lua',
+--}
 
 --files { 'html/**/*' }
 
 -- version
-version '0.1'
+version '0.2'
 
