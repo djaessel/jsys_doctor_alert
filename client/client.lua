@@ -1,49 +1,56 @@
 -- JSYS was here! :P
 
-function keyPressed(key)
-    IsControlPressed(0, key) -- changed 09.01.24
-end
+
 
 local active = false
-function checkPlayerPos()
+function createAndRunPrompt()
     active = true
-    Citizen.CreateThread(function ()
-        local infoCountX = -1
-        while active do
-            local playerPed = PlayerPedId()
-            local playerPos = GetEntityCoords(playerPed, true, true)
-            for _, coordsx in pairs(Config.CoordinatesAll) do
-                local rangePos = #(coordsx.coords - playerPos)
-                if rangePos <= Config.Range then
-                    if infoCountx >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
-                        TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
-                        infoCountX = 0
-                    end
-                    if keyPressed(Config.KeyBinding) then
-                        --TriggerServerEvent("jsys_doctor_alert:show_info")
-                        print("JSYS: execute command", coordsx.coomand)
-                        ExecuteCommand(coordsx.command)
 
-                        print("JSYS: Waiting...", Config.Cooldown, "seconds")
-                        Citizen.Wait(Config.Cooldown)
-                        print("JSYS: Done waiting!")
-                        active = false
-                    end
+    Citizen.CreateThread(function()
+        Citizen.Wait(60000) -- wait 60 seconds
+        
+        -----------------------------------------
+
+        print("JSYS: Registering prompts!")
+
+        local prompt = PromptRegisterBegin()
+        PromptSetControlAction(prompt, GetHashKey("INPUT_CONTEXT_X")) -- R key
+        PromptSetText(prompt, CreateVarString(10, "LITERAL_STRING", "[R] um nach dem Arzt schicken zu lassen"))
+
+        local position = Config.CoordinatesAll[0].coords
+        local radius = Config.Radius
+        -- _UI_PROMPT_CONTEXT_SET_POINT
+        Citizen.InvokeNative(0xAE84C5EE2C384FB3, prompt, position.x, position.y, position.z)
+        -- _UI_PROMPT_CONTEXT_SET_RADIUS
+        Citizen.InvokeNative(0x0C718001B77CA468, prompt, radius)
+
+        PromptRegisterEnd(prompt)
+
+        print("JSYS: Prompts successfully registered!")
+
+        -----------------------------------------
+
+        while active do
+            if PromptIsActive(prompt) then
+                if PromptIsPressed(prompt) then
+                    print("JSYS: You pressed R!!!")
+                    print("JSYS: execute command", Config.CoordinatesAll[0].coomand)
+                    ExecuteCommand(Config.CoordinatesAll[0].command)
+                    print("JSYS: Waiting...", Config.Cooldown, "seconds")
+                    Citizen.Wait(Config.Cooldown)
+                    print("JSYS: Done waiting!")
+                    active = false -- deactivate after debugging!!!
                 end
             end
-            -- wait a little between checks
             Citizen.Wait(Config.TickerCheck)
-            infoCountX += Config.TickerCheck
         end
+
+        -----------------------------------------
+
+        print("JSYS: Exiting loop!!!")
+        PromptDelete(prompt)
+        print("JSYS: Prompt deactivated!!!")
     end)
 end
 
-
---RegisterNetEvent("jsys_doctor_alert:show_info_client")
---AddEventHandler("jsys_doctor_alert:show_info_client", function()
---    print("JSYS: Hello Doctor!")
---    TriggerEvent('vorp:TipRight', "Someone needs a doctor in the building!", Config.VisibleDuration)
---end)
-
-
-checkPlayerPos()
+createAndRunPrompt()
