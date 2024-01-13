@@ -7,8 +7,14 @@ function createAndRunPrompt()
     active = true
 
     Citizen.CreateThread(function()
-        Citizen.Wait(60000) -- wait 60 seconds
-        
+        print("JSYS: Waiting for player spawn...")
+
+        while PlayerPedId() < 0 do
+            Citizen.Wait(1000)
+        end
+
+        print("JSYS: Player spawned! (?)")
+
         -----------------------------------------
 
         print("JSYS: Registering prompts!")
@@ -16,6 +22,12 @@ function createAndRunPrompt()
         local prompt = PromptRegisterBegin()
         PromptSetControlAction(prompt, GetHashKey("INPUT_CONTEXT_X")) -- R key
         PromptSetText(prompt, CreateVarString(10, "LITERAL_STRING", "[R] um nach dem Arzt schicken zu lassen"))
+        
+        PromptSetStandardMode(prompt, true)
+        PromptSetPriority(prompt, 1);
+        PromptSetTransportMode(prompt, 0);
+        --PromptSetAttribute(prompt, 18, 1);
+        --PromptSetStandardizedHoldMode(prompt, 1704213876);
 
         local position = Config.CoordinatesAll[1].coords
         local radius = Config.Radius
@@ -26,7 +38,12 @@ function createAndRunPrompt()
 
         PromptRegisterEnd(prompt)
 
+        PromptSetEnabled(prompt, true)
+        PromptSetVisible(prompt, true)
+
         print("JSYS: Prompts successfully registered!")
+        print("JSYS: Prompt valid >", PromptIsValid(prompt))
+        print("JSYS: Prompt active >", PromptIsActive(prompt))
 
         -----------------------------------------
 
@@ -42,7 +59,8 @@ function createAndRunPrompt()
                     active = false -- deactivate after debugging!!!
                 end
             end
-            Citizen.Wait(Config.TickerCheck)
+            Citizen.Wait(0)
+            --Citizen.Wait(Config.TickerCheck)
         end
 
         -----------------------------------------
