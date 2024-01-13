@@ -1,11 +1,11 @@
 -- JSYS was here! :P
 
 Config = {
-    --KeyBinding = 0xE30CD707, -- R -- unused at the moment
+    KeyBinding = 0xE30CD707, -- R
     Radius = 3, -- meters
     Cooldown = 40000, -- milliseconds
-    TickerCheck = 50, -- milliseconds
-    --KeyInfoVisibleDuration = 5000, -- milliseconds -- unused at the moment
+    TickerCheck = 500, -- milliseconds
+    KeyInfoVisibleDuration = 5000, -- milliseconds
 
     CoordinatesAll = {
         {

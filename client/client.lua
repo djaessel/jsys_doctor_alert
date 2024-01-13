@@ -1,8 +1,61 @@
 -- JSYS was here! :P
 
 
+function keyPressed(key)
+    IsControlPressed(0, key) -- changed 09.01.24
+end
+
+function callCommandNow()
+    print("JSYS: execute command", coordsx.coomand)
+    ExecuteCommand(coordsx.command)
+
+    print("JSYS: Waiting...", Config.Cooldown, "seconds")
+    Citizen.Wait(Config.Cooldown)
+    print("JSYS: Done waiting!")
+    active = false
+end
 
 local active = false
+local inRange = false
+
+Citizen.CreateThread(function ()
+    active = true
+    local infoCountX = -1
+    while active do
+        local playerPed = PlayerPedId()
+        local playerPos = GetEntityCoords(playerPed, true, true)
+        for _, coordsx in pairs(Config.CoordinatesAll) do
+            local rangePos = #(coordsx.coords - playerPos)
+            if rangePos <= Config.Range then
+                if infoCountX >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
+                    TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
+                    infoCountX = 0
+                end
+                inRange = true
+            else
+                inRange = false
+            end
+        end
+        -- wait a little between checks
+        Citizen.Wait(Config.TickerCheck)
+        infoCountX += Config.TickerCheck
+    end
+
+    print("JSYS: Exiting main loop!")
+end)
+
+Citizen.CreateThread(function()
+    active = true
+    while active do
+        if keyPressed(Config.KeyBinding) and inRange then
+            callCommandNow()
+        end
+        Citizen.Wait(0)
+    end
+    print("JSYS: Exiting control loop!")
+end)
+
+
 function createAndRunPrompt()
     active = true
 
@@ -71,4 +124,4 @@ function createAndRunPrompt()
     end)
 end
 
-createAndRunPrompt()
+--createAndRunPrompt()
