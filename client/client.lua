@@ -1,9 +1,7 @@
 -- JSYS was here! :P
 
-
-function keyPressed(key)
-    IsControlPressed(0, key) -- changed 09.01.24
-end
+local active = false
+local inRange = {}
 
 function callCommandNow()
     print("JSYS: execute command", coordsx.coomand)
@@ -15,25 +13,45 @@ function callCommandNow()
     active = false
 end
 
-local active = false
-local inRange = false
+--function tablelength(T)
+--    local count = 0
+--    for _ in pairs(T) do count = count + 1 end
+--    return count
+--end
+
+function isOneInRange()
+    local success = false
+    if #inRange > 0 then
+        for i, _ in pairs(Config.CoordinatesAll) do
+            if inRange[i] then
+                success = true
+            end
+        end
+    end
+    return success
+end
 
 Citizen.CreateThread(function ()
     active = true
     local infoCountX = -1
+
+    for i, _ in pairs(Config.CoordinatesAll) do
+        table.insert(inRange, false)
+    end
+
     while active do
         local playerPed = PlayerPedId()
         local playerPos = GetEntityCoords(playerPed, true, true)
-        for _, coordsx in pairs(Config.CoordinatesAll) do
+        for k, coordsx in pairs(Config.CoordinatesAll) do
             local rangePos = #(coordsx.coords - playerPos)
             if rangePos <= Config.Range then
                 if infoCountX >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
                     TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                     infoCountX = 0
                 end
-                inRange = true
+                inRange[k] = true
             else
-                inRange = false
+                inRange[k] = false
             end
         end
         -- wait a little between checks
@@ -47,7 +65,7 @@ end)
 Citizen.CreateThread(function()
     active = true
     while active do
-        if keyPressed(Config.KeyBinding) and inRange then
+        if IsControlPressed(0, Config.KeyBinding) and isOneInRange() then
             callCommandNow()
         end
         Citizen.Wait(0)
