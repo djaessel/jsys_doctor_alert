@@ -6,7 +6,7 @@ game 'rdr3'
 author 'djaessel'
 repository 'https://github.com/djaessel/jsys_doctor_alert'
 description 'Doctor alert for RedM'
-version '0.4'
+version '0.5'
 
 lua54 'yes'
 
