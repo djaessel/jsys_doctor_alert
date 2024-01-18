@@ -44,7 +44,7 @@ Citizen.CreateThread(function ()
         local playerPos = GetEntityCoords(playerPed, true, true)
         for k, coordsx in pairs(Config.CoordinatesAll) do
             local rangePos = #(coordsx.coords - playerPos)
-            if rangePos <= Config.Range then
+            if rangePos <= Config.Radius then
                 if infoCountX >= Config.KeyInfoVisibleDuration or infoCountX < 0 then
                     TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
                     infoCountX = 0
