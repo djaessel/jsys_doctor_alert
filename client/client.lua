@@ -7,7 +7,7 @@ local waiting = false
 function callCommandNow(index)
     waiting = true
 
-    print("JSYS: execute command", Config.CoordinatesAll[index].command)
+    --print("JSYS: execute command", Config.CoordinatesAll[index].command)
     ExecuteCommand(Config.CoordinatesAll[index].command)
 
     --active = false
@@ -52,10 +52,10 @@ Citizen.CreateThread(function ()
         end
 
         if waiting then
-            print("JSYS: Waiting main loop...", Config.Cooldown, "ms")
+            --print("JSYS: Waiting main loop...", Config.Cooldown, "ms")
             Citizen.Wait(Config.Cooldown)
             waiting = false
-            print("JSYS: Done waiting main loop!")
+            --print("JSYS: Done waiting main loop!")
         end
 
         -- wait a little between checks
