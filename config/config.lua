@@ -10,7 +10,7 @@ Config = {
     CoordinatesAll = {
         {
             coords = vector3(2724.02, -1236.5, 49.95), -- x, y, z
-            command = "doctorsdalert"
+            command = "doctorsdalert2"
         },
         -- below can be activated and changed, but unused at the moment!
 --        {
