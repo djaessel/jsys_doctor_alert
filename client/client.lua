@@ -7,7 +7,6 @@ local waiting = false
 function callCommandNow(index)
     waiting = true
 
-    --print("JSYS: execute command", Config.CoordinatesAll[index].command)
     ExecuteCommand(Config.CoordinatesAll[index].command)
 
     --active = false
@@ -15,7 +14,7 @@ end
 
 
 function indexInRange()
-    local foundIndex = -1
+    local foundIndex = 0
     if #inRange > 0 then
         for i, _ in pairs(Config.CoordinatesAll) do
             if inRange[i] then
@@ -52,10 +51,11 @@ Citizen.CreateThread(function ()
         end
 
         if waiting then
-            --print("JSYS: Waiting main loop...", Config.Cooldown, "ms")
+            for i, _ in pairs(Config.CoordinatesAll) do
+                inRange[i] = false -- set all to false to not be able to call any doctor at the moment
+            end
             Citizen.Wait(Config.Cooldown)
             waiting = false
-            --print("JSYS: Done waiting main loop!")
         end
 
         -- wait a little between checks
@@ -69,7 +69,7 @@ end)
 
 Citizen.CreateThread(function()
     active = true
-    local index = -1
+    local index = 0
     while active do
         index = indexInRange()
         if IsControlPressed(0, Config.KeyBinding) and index > 0 then

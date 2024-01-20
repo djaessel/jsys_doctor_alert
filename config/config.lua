@@ -4,7 +4,7 @@ Config = {
     KeyBinding = 0xE30CD707, -- R
     Radius = 3, -- meters
     Cooldown = 60000, -- milliseconds
-    TickerCheck = 1000, -- milliseconds
+    TickerCheck = 500, -- milliseconds
     KeyInfoVisibleDuration = 5000, -- milliseconds
 
     CoordinatesAll = {

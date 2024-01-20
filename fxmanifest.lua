@@ -6,12 +6,12 @@ game 'rdr3'
 author 'djaessel'
 repository 'https://github.com/djaessel/jsys_doctor_alert'
 description 'Doctor alert for RedM'
-version '0.5'
+version '0.6'
 
 lua54 'yes'
 
 client_scripts {
-  'client/*.lua',
-  'config/*.lua'
+  'client/client.lua',
+  'config/config.lua'
 }
 
