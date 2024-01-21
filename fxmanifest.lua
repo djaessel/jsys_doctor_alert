@@ -5,8 +5,8 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 game 'rdr3'
 author 'djaessel'
 repository 'https://github.com/djaessel/jsys_doctor_alert'
-description 'Doctor alert for RedM'
-version '0.6'
+description 'JSYS - Call doctor per command and coordinates'
+version '0.7'
 
 lua54 'yes'
 

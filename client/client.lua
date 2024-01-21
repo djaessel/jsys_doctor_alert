@@ -8,8 +8,6 @@ function callCommandNow(index)
     waiting = true
 
     ExecuteCommand(Config.CoordinatesAll[index].command)
-
-    --active = false
 end
 
 
@@ -28,9 +26,10 @@ end
 
 Citizen.CreateThread(function ()
     active = true
-    local infoCountX = -1
+    local infoCountX = 0
+    local sleepCounter = 0
 
-    for i, _ in pairs(Config.CoordinatesAll) do
+    for _ in pairs(Config.CoordinatesAll) do
         table.insert(inRange, false)
     end
 
@@ -40,8 +39,8 @@ Citizen.CreateThread(function ()
         for k, coordsx in pairs(Config.CoordinatesAll) do
             local rangePos = #(coordsx.coords - playerPos)
             if rangePos <= Config.Radius then
-                if infoCountX > Config.KeyInfoVisibleDuration or infoCountX < 0 then
-                    TriggerEvent('vorp:TipRight', "[R] um nach dem Arzt schicken zu lassen", Config.KeyInfoVisibleDuration)
+                if !waiting and (infoCountX > Config.KeyInfoVisibleDuration or infoCountX <= 0) then
+                    TriggerEvent('vorp:TipRight', Config.KeyInfoText, Config.KeyInfoVisibleDuration)
                     infoCountX = 0
                 end
                 inRange[k] = true
@@ -50,17 +49,15 @@ Citizen.CreateThread(function ()
             end
         end
 
-        if waiting then
-            for i, _ in pairs(Config.CoordinatesAll) do
-                inRange[i] = false -- set all to false to not be able to call any doctor at the moment
-            end
-            Citizen.Wait(Config.Cooldown)
+        if waiting and Config.Cooldown <= sleepCounter then
+            sleepCounter = 0
             waiting = false
         end
 
         -- wait a little between checks
         Citizen.Wait(Config.TickerCheck)
         infoCountX += Config.TickerCheck
+        sleepCounter += Config.TickerCheck
     end
 
     print("JSYS: Exiting main loop!")
@@ -74,7 +71,7 @@ Citizen.CreateThread(function()
         index = indexInRange()
         if IsControlPressed(0, Config.KeyBinding) and index > 0 then
             if waiting then
-                TriggerEvent('vorp:TipRight', "Du hast gerade schon den Arzt gerufen!", Config.KeyInfoVisibleDuration)
+                TriggerEvent('vorp:TipRight', Config.InfoAlreadyCalled, Config.KeyInfoVisibleDuration)
             else
                 callCommandNow(index)
             end
