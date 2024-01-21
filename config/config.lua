@@ -3,7 +3,7 @@
 Config = {
     KeyBinding = 0xE30CD707, -- R
     KeyInfoText = "[R] um nach dem Arzt schicken zu lassen", -- set to correct key in text
-    InfoAlreadyCalled = "Du hast gerade schon den Arzt gerufen!" -- when key was already pressed
+    InfoAlreadyCalled = "Du hast gerade schon den Arzt gerufen!", -- when key was already pressed
     Radius = 3, -- meters
     Cooldown = 60000, -- milliseconds
     TickerCheck = 1000, -- milliseconds -- only change if you know what you are doing

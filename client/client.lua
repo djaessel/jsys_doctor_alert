@@ -3,10 +3,11 @@
 local active = false
 local inRange = {}
 local waiting = false
+local sleepCounter = 0
 
 function callCommandNow(index)
+    sleepCounter = 0
     waiting = true
-
     ExecuteCommand(Config.CoordinatesAll[index].command)
 end
 
@@ -27,7 +28,6 @@ end
 Citizen.CreateThread(function ()
     active = true
     local infoCountX = 0
-    local sleepCounter = 0
 
     for _ in pairs(Config.CoordinatesAll) do
         table.insert(inRange, false)
@@ -39,7 +39,7 @@ Citizen.CreateThread(function ()
         for k, coordsx in pairs(Config.CoordinatesAll) do
             local rangePos = #(coordsx.coords - playerPos)
             if rangePos <= Config.Radius then
-                if !waiting and (infoCountX > Config.KeyInfoVisibleDuration or infoCountX <= 0) then
+                if waiting == false and (infoCountX > Config.KeyInfoVisibleDuration or infoCountX <= 0) then
                     TriggerEvent('vorp:TipRight', Config.KeyInfoText, Config.KeyInfoVisibleDuration)
                     infoCountX = 0
                 end
