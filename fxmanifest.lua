@@ -6,7 +6,7 @@ game 'rdr3'
 author 'djaessel'
 repository 'https://github.com/djaessel/jsys_doctor_alert'
 description 'JSYS - Call doctor per command and coordinates'
-version '0.7'
+version '0.8'
 
 lua54 'yes'
 

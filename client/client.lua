@@ -38,7 +38,7 @@ Citizen.CreateThread(function ()
         local playerPos = GetEntityCoords(playerPed, true, true)
         for k, coordsx in pairs(Config.CoordinatesAll) do
             local rangePos = #(coordsx.coords - playerPos)
-            if rangePos <= Config.Radius then
+            if rangePos <= coordsx.radius then
                 if waiting == false and (infoCountX > Config.KeyInfoVisibleDuration or infoCountX <= 0) then
                     TriggerEvent('vorp:TipRight', Config.KeyInfoText, Config.KeyInfoVisibleDuration)
                     infoCountX = 0
@@ -77,7 +77,7 @@ Citizen.CreateThread(function()
             end
             Citizen.Wait(Config.KeyInfoVisibleDuration)
         end
-        Citizen.Wait(0)
+        Citizen.Wait(2)
     end
     print("JSYS: Exiting control loop!")
 end)
