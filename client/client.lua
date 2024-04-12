@@ -40,7 +40,7 @@ Citizen.CreateThread(function ()
             local rangePos = #(coordsx.coords - playerPos)
             if rangePos <= coordsx.radius then
                 if waiting == false and (infoCountX > Config.KeyInfoVisibleDuration or infoCountX <= 0) then
-                    TriggerEvent('vorp:TipRight', Config.KeyInfoText, Config.KeyInfoVisibleDuration)
+                    TriggerEvent('vorp:TipRight', coordsx.KeyInfoText, Config.KeyInfoVisibleDuration)
                     infoCountX = 0
                 end
                 inRange[k] = true

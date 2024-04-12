@@ -2,7 +2,6 @@
 
 Config = {
     KeyBinding = 0xE30CD707, -- R
-    KeyInfoText = "[R] um nach dem Arzt schicken zu lassen", -- set to correct key in text
     InfoAlreadyCalled = "Du hast gerade schon den Arzt gerufen!", -- when key was already pressed
     Cooldown = 60000, -- milliseconds
     TickerCheck = 1000, -- milliseconds -- only change if you know what you are doing
@@ -15,12 +14,14 @@ Config = {
             coords = vector3(2724.02, -1236.5, 49.95), -- x, y, z
             command = "doctorsdalert2", -- set to coorect command from bcc-job-alerts
 	    radius = 3, -- meters
+	    KeyInfoText = "[R] um nach dem Arzt schicken zu lassen", -- set to correct key in text
         },
         {
             -- Doctor RD
             coords = vector3(1369.23, -1310.75, 77.94), -- x, y, z
             command = "doctorrdalert2", -- set to coorect command from bcc-job-alerts
 	    radius = 3, -- meters
+	    KeyInfoText = "[R] um nach dem Arzt schicken zu lassen", -- set to correct key in text
         },
         -- below can be activated and changed, but unused at the moment!
 --        {
@@ -28,6 +29,7 @@ Config = {
 --            coords = vector3(40, 50, 6), -- x, y, z
 --            command = "doctorxyalert"
 --            radius = 3, -- meters
+--            KeyInfoText = "[R] um nach dem Arzt schicken zu lassen", -- set to correct key in text
 --        },
     } -- CoordinatesAll end
 } -- Config end
